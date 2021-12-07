@@ -1,5 +1,7 @@
 package com.adun.linkedList;
 
+import java.util.Stack;
+
 /**
  * @author Zhu Dunfeng
  * @date 2021/12/3 14:37
@@ -45,22 +47,49 @@ public class SingleLinkedListDemo {
 //        singleLinkedList.del(2);
 //        singleLinkedList.del(3);
         //singleLinkedList.del(5);
-        System.out.println("删除后的数据~~~");
-        singleLinkedList.list();
+//        System.out.println("删除后的数据~~~");
+//        singleLinkedList.list();
 
         System.out.println("有效链表节点数~~~");
         System.out.println(getLength(singleLinkedList.getHead()));
 
         System.out.println("倒数第一个节点数据~~");
-        System.out.println(findLastIndexNode(singleLinkedList.getHead(), 2));
+        System.out.println(findLastIndexNode(singleLinkedList.getHead(), 1));
+
+        //逆序打印，不破坏链表的原来结构
+        System.out.println("逆序打印，不破坏链表的原来结构~~");
+        reversePrint(singleLinkedList.getHead());
 
         //反转数据
-        System.out.println("反转后的数据显示~~~");
-        reverseList(singleLinkedList.getHead());
-        singleLinkedList.list();
+//        System.out.println("反转后的数据显示~~~");
+//        reverseList(singleLinkedList.getHead());
+//        singleLinkedList.list();
 
-        System.out.println("testTwoLinked~~~~~");
-        testTwoLinked();
+//        System.out.println("testTwoLinked~~~~~");
+//        testTwoLinked();
+    }
+
+
+    public static void reversePrint(HeroNode head){
+        if(head.next==null){
+            //链表为空
+            return;
+        }
+
+        //创建一个栈，将链表节点分别压入栈中，利用栈的特性进行打印
+        Stack<HeroNode> stack = new Stack<>();
+        //定义头节点的分身指针
+        HeroNode curr=head.next;
+        while (curr!=null){
+            stack.push(curr);
+            curr=curr.next;
+        }
+
+        //打印
+       while (!stack.isEmpty()){
+           System.out.println(stack.pop());
+       }
+
     }
 
     public static void testTwoLinked(){
