@@ -1,5 +1,4 @@
 package com.adun.stack;
-
 import java.util.Scanner;
 
 /**
@@ -50,7 +49,9 @@ public class LinkedStackDemo {
 
 }
 
-
+/**
+ * 双向链表（可以实现自我删除）
+ */
 class LinkedStack {
 
     //栈的大小
@@ -58,7 +59,7 @@ class LinkedStack {
 
     //表示栈顶，初始化-1,定义栈顶与栈尾指针
     private StackNode head = new StackNode(-1);
-    private StackNode tail=head;
+
 
     public LinkedStack(int maxSize) {
         this.maxSize = maxSize;
@@ -70,15 +71,15 @@ class LinkedStack {
 
     //栈空
     public boolean isEmpty() {
-        return head == tail;
+        return head.next==null;
     }
 
     //栈满
     public boolean isFull() {
-        int sum = 0;
+        int sum = 1;
         //定义一个辅助指针
-        StackNode curr = head;
-        while (curr != tail) {
+        StackNode curr = head.next;
+        while (curr != null) {
             sum++;
             curr = curr.next;
         }
@@ -93,16 +94,15 @@ class LinkedStack {
             System.out.println("栈满~~~");
             return;
         }
-        //变量链表，找到最后
-        while (true) {
-            if (tail.next == null) {
-                break;
-            }
-            //如果没有找到链表尾节点，指针后移
-            tail = tail.next;
+        //定义头节点的分身指针
+        StackNode temp = head;
+        //找到最后
+        while (temp.next != null) {
+            temp = temp.next;
         }
-        //当退出while循环时，temp指向了链表的最后
-        tail.next = stackNode;
+        //添加新节点,跳出循环指针已经指向
+        temp.next = stackNode;
+        stackNode.pre = temp;
 
     }
 
@@ -111,10 +111,18 @@ class LinkedStack {
         if (isEmpty()) {
             throw new RuntimeException("栈空~~~~");
         }
-
-        StackNode currNode = tail;
-        tail = null;
-        return currNode.num;
+        //定义头节点分身指针与标识
+        StackNode temp = head.next;
+        //找到最后
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.pre.next = temp.next;
+        //如果是最后一个节点，不需要执行下面这句，否在会出现空指针
+        if (temp.next != null) {
+            temp.next.pre = temp.pre;
+        }
+        return temp.num;
     }
 
     //打印栈中数据
@@ -135,9 +143,13 @@ class LinkedStack {
 
 }
 
+
 class StackNode {
     //当前节点数据
     public int num;
+
+    //指向前一节点
+    public StackNode pre;
 
     //指向下一节点
     public StackNode next;
