@@ -65,34 +65,13 @@ public class SingleLinkedListDemo {
 //        reverseList(singleLinkedList.getHead());
 //        singleLinkedList.list();
 
-//        System.out.println("testTwoLinked~~~~~");
-//        testTwoLinked();
+        System.out.println("testTwoLinked~~~~~");
+        testTwoLinked();
     }
 
 
-    public static void reversePrint(HeroNode head){
-        if(head.next==null){
-            //链表为空
-            return;
-        }
 
-        //创建一个栈，将链表节点分别压入栈中，利用栈的特性进行打印
-        Stack<HeroNode> stack = new Stack<>();
-        //定义头节点的分身指针
-        HeroNode curr=head.next;
-        while (curr!=null){
-            stack.push(curr);
-            curr=curr.next;
-        }
-
-        //打印
-       while (!stack.isEmpty()){
-           System.out.println(stack.pop());
-       }
-
-    }
-
-    public static void testTwoLinked(){
+    public static void testTwoLinked() {
         HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
         HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
 
@@ -107,8 +86,29 @@ public class SingleLinkedListDemo {
         singleLinkedList2.add(hero3);
 
         mergeTwoLinkList(singleLinkedList1.getHead(), singleLinkedList2.getHead());
-
         singleLinkedList1.list();
+    }
+
+
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            //链表为空
+            return;
+        }
+
+        //创建一个栈，将链表节点分别压入栈中，利用栈的特性进行打印
+        Stack<HeroNode> stack = new Stack<>();
+        //定义头节点的分身指针
+        HeroNode curr = head.next;
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.next;
+        }
+
+        //打印
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop());
+        }
 
     }
 
@@ -203,7 +203,7 @@ public class SingleLinkedListDemo {
      * 合并两个有序的链表，合并后依然有序
      * 思路：与反转相似，需要新的链表
      */
-    public static SingleLinkedList mergeTwoLinkList(HeroNode head1, HeroNode head2) {
+    public static void mergeTwoLinkList(HeroNode head1, HeroNode head2) {
         HeroNode prehead = new HeroNode(0, "", "");
         //定义一个辅助指针，用于遍历原来的链表
         HeroNode prev = prehead;
@@ -224,9 +224,9 @@ public class SingleLinkedListDemo {
         //合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
         prev.next = curr1 == null ? curr2 : curr1;
 
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
-        singleLinkedList.head = prehead;
-        return singleLinkedList;
+        head1 = prehead;
+
+        return;
     }
 
 }
@@ -235,7 +235,7 @@ public class SingleLinkedListDemo {
 //不考虑排名排序
 class SingleLinkedList {
     //初始化头节点
-    public HeroNode head = new HeroNode(0, "", "");
+    private HeroNode head = new HeroNode(0, "", "");
 
     public HeroNode getHead() {
         return head;
@@ -317,7 +317,7 @@ class SingleLinkedList {
         //标识是否找到，默认为false
         boolean flag = false;
         while (true) {
-            //已经变量完链表
+            //已经遍历完链表
             if (temp.next == null) {
                 break;
             }

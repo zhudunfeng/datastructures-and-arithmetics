@@ -1,0 +1,156 @@
+package com.adun.stack;
+
+import java.util.Scanner;
+
+/**
+ * @author Zhu Dunfeng
+ * @date 2022/2/16 10:57
+ */
+public class LinkedStackDemo {
+
+    public static void main(String[] args) {
+        LinkedStack stack = new LinkedStack(4);
+        String key = "";
+        boolean loop = true;//控制是否退出菜单
+        Scanner scanner = new Scanner(System.in);
+        while (loop) {
+            System.out.println("show：表示显示栈");
+            System.out.println("exit：退出程序");
+            System.out.println("push：表示添加数据到栈（入栈）");
+            System.out.println("pop：表示从栈中取出数据（出栈）");
+            System.out.println("请输入你的选择");
+            key = scanner.next();
+            switch (key) {
+                case "show":
+                    stack.list();
+                    break;
+                case "push":
+                    System.out.println("请输入一个数");
+                    int value = scanner.nextInt();
+                    stack.push(value);
+                    break;
+                case "pop":
+                    try {
+                        int res = stack.pop();
+                        System.out.printf("出栈的数据是%d\n\n", res);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "exit":
+                    scanner.close();
+                    loop = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
+}
+
+
+class LinkedStack {
+
+    //栈的大小
+    private int maxSize;
+
+    //表示栈顶，初始化-1,定义栈顶与栈尾指针
+    private StackNode head = new StackNode(-1);
+    private StackNode tail=head;
+
+    public LinkedStack(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public StackNode getHead() {
+        return head;
+    }
+
+    //栈空
+    public boolean isEmpty() {
+        return head == tail;
+    }
+
+    //栈满
+    public boolean isFull() {
+        int sum = 0;
+        //定义一个辅助指针
+        StackNode curr = head;
+        while (curr != tail) {
+            sum++;
+            curr = curr.next;
+        }
+        return sum > maxSize;
+    }
+
+
+    //push（入栈）
+    public void push(int num) {
+        StackNode stackNode = new StackNode(num);
+        if (isFull()) {
+            System.out.println("栈满~~~");
+            return;
+        }
+        //变量链表，找到最后
+        while (true) {
+            if (tail.next == null) {
+                break;
+            }
+            //如果没有找到链表尾节点，指针后移
+            tail = tail.next;
+        }
+        //当退出while循环时，temp指向了链表的最后
+        tail.next = stackNode;
+
+    }
+
+    //pop（出栈）
+    public int pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("栈空~~~~");
+        }
+
+        StackNode currNode = tail;
+        tail = null;
+        return currNode.num;
+    }
+
+    //打印栈中数据
+    public void list() {
+        if (isEmpty()) {
+            System.out.println("栈空，没有数据~~");
+            return;
+        }
+        //定义头节点的分身指针
+        StackNode temp = head.next;
+        while (temp != null) {
+            System.out.println(temp.num);
+            //如果没有找到链表尾节点，指针后移
+            temp = temp.next;
+        }
+    }
+
+
+}
+
+class StackNode {
+    //当前节点数据
+    public int num;
+
+    //指向下一节点
+    public StackNode next;
+
+    public StackNode(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public String toString() {
+        return "StackNode{" +
+                "num=" + num +
+                ", next=" + next +
+                '}';
+    }
+}
