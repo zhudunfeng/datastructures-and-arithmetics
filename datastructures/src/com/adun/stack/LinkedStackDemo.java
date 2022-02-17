@@ -76,14 +76,14 @@ class LinkedStack {
 
     //栈满
     public boolean isFull() {
-        int sum = 1;
+        int sum = 0;
         //定义一个辅助指针
         StackNode curr = head.next;
         while (curr != null) {
             sum++;
             curr = curr.next;
         }
-        return sum > maxSize;
+        return sum >= maxSize;
     }
 
 
@@ -131,13 +131,29 @@ class LinkedStack {
             System.out.println("栈空，没有数据~~");
             return;
         }
-        //定义头节点的分身指针
-        StackNode temp = head.next;
-        while (temp != null) {
-            System.out.println(temp.num);
-            //如果没有找到链表尾节点，指针后移
-            temp = temp.next;
+        //定义头节点分身指针与标识
+        StackNode nextTemp = head.next;
+        int sum=0;
+        //找到最后
+        while (nextTemp.next != null) {
+            sum++;
+            nextTemp = nextTemp.next;
         }
+
+        //从链表尾部节点遍历到头节点
+        while (nextTemp.pre!=null){
+            System.out.printf("StackNode[%d]=%d\n",sum,nextTemp.num);
+            sum--;
+            nextTemp=nextTemp.pre;
+        }
+
+//        //定义头节点的分身指针
+//        StackNode temp = head.next;
+//        while (temp != null) {
+//            System.out.println(temp.num);
+//            //如果没有找到链表尾节点，指针后移
+//            temp = temp.next;
+//        }
     }
 
 
