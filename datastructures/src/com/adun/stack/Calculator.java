@@ -22,7 +22,7 @@ package com.adun.stack;
 public class Calculator {
     public static void main(String[] args) {
         //根据前面的思路
-        String expression="3+2*6-2";
+        String expression="30+2*6-2";//如何处理多位数的问题？
 
         //创建两个栈，数栈和符号栈
         ArrayStack2 numStack = new ArrayStack2(10);
@@ -66,7 +66,29 @@ public class Calculator {
                 }
 
             }else{//如果是数，则直接如数栈
-                numStack.push(ch-48);
+                //numStack.push(ch-48);
+                //分析思路
+                //1.当前处理多位数时，不能发现是一个数就立即入栈，因为他可能是多位数
+                //2.在处理数，需要向expression的表达式的index后再看一位，如果是数就进行扫描，如果是符号才入栈
+                //3.因此我们需要定义一个变量字符串，用于拼接
+
+                //处理多位数
+                keepNum+=ch;
+
+                //如果ch已经是expression的最后一位，就直接入栈
+                if(index==expression.length()-1){
+                    numStack.push(Integer.parseInt(keepNum));
+                }else{
+                    //判断下一个字符是不是数字，如果是数字，就继续扫描，如果是运算符，则入栈
+                    //注意是看后一位，不是index++
+                    if(operStack.isOper(expression.substring(index+1,index+2).charAt(0))){
+                        //如果后一位是运算符，则入栈keepNum="1"或者"123"
+                        numStack.push(Integer.parseInt(keepNum));
+                        //重要的！！！，keepNumq清空;
+                        keepNum="";
+                    }
+
+                }
             }
             //让index+1,并判断是否扫描到expression最后
             index++;
