@@ -61,9 +61,9 @@ public class SingleLinkedListDemo {
         reversePrint(singleLinkedList.getHead());
 
         //反转数据
-//        System.out.println("反转后的数据显示~~~");
-//        reverseList(singleLinkedList.getHead());
-//        singleLinkedList.list();
+        System.out.println("反转后的数据显示~~~");
+        reverseList(singleLinkedList.getHead());
+        singleLinkedList.list();
 
         System.out.println("testTwoLinked~~~~~");
         testTwoLinked();
