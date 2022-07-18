@@ -358,7 +358,7 @@ class SingleLinkedList {
                 flag = true;
                 break;
             }
-            //上面没有找打，辅助指针后移
+            //上面没有找到，辅助指针后移
             temp = temp.next;
         }
 
