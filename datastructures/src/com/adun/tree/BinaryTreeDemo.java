@@ -69,7 +69,7 @@ public class BinaryTreeDemo {
         //测试删除节点
         System.out.println("删除前。前序遍历");
         binaryTree.preOrder();
-//        binaryTree.delNode(5);
+        //binaryTree.delNode(5);
         binaryTree.delNode(3);
         System.out.println("删除后，前序遍历");
         binaryTree.preOrder();
